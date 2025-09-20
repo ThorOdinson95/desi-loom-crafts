@@ -265,7 +265,7 @@ const Index = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative h-96 overflow-hidden mt-[140px]">
+      <section className="relative h-96 overflow-hidden" style={{ marginTop: '140px' }}>
         <img
           src={heroImage}
           alt="Beautiful handloom products showcase"

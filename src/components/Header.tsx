@@ -68,7 +68,10 @@ const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange }: HeaderP
               'All Products',
               'Sarees', 
               'Dresses',
+              'Men\'s Kurtas',
               'Men\'s Shirts',
+              'Kurtis',
+              'Dupattas',
               'Bags',
               'Accessories'
             ].map((category) => (
