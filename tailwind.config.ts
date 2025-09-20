@@ -47,6 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        handloom: {
+          saffron: "hsl(var(--handloom-saffron))",
+          terracotta: "hsl(var(--handloom-terracotta))",
+          gold: "hsl(var(--handloom-gold))",
+          forest: "hsl(var(--handloom-forest))",
+          cream: "hsl(var(--handloom-cream))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -62,6 +69,18 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        'serif': ['Playfair Display', 'serif'],
+        'sans': ['Inter', 'sans-serif'],
+      },
+      backgroundImage: {
+        'hero-gradient': 'var(--gradient-hero)',
+        'subtle-gradient': 'var(--gradient-subtle)',
+      },
+      boxShadow: {
+        'handloom': 'var(--shadow-handloom)',
+        'card-handloom': 'var(--shadow-card)',
       },
       keyframes: {
         "accordion-down": {
