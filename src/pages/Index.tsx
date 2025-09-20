@@ -10,9 +10,15 @@ import CartSidebar from "@/components/CartSidebar";
 // Import images
 import heroImage from "@/assets/hero-handloom.jpg";
 import sareeImage from "@/assets/saree-1.jpg";
+import sareeImage2 from "@/assets/saree-2.jpg";
 import dressImage from "@/assets/dress-1.jpg";
+import dressImage2 from "@/assets/dress-2.jpg";
 import shirtImage from "@/assets/shirt-1.jpg";
 import bagImage from "@/assets/bag-1.jpg";
+import bagImage2 from "@/assets/bag-2.jpg";
+import kurtaImage from "@/assets/kurta-1.jpg";
+import kurtiImage from "@/assets/kurti-1.jpg";
+import dupattaImage from "@/assets/dupatta-1.jpg";
 
 // Mock product data
 const mockProducts = [
@@ -64,7 +70,7 @@ const mockProducts = [
     name: "Banarasi Silk Saree - Wedding Collection",
     price: 18000,
     originalPrice: 22000,
-    image: sareeImage,
+    image: sareeImage2,
     category: "Sarees",
     isHandmade: true,
     rating: 4.9,
@@ -74,10 +80,53 @@ const mockProducts = [
     id: "6",
     name: "Handloom Cotton Palazzo Dress Set",
     price: 2800,
-    image: dressImage,
+    image: dressImage2,
     category: "Dresses",
     isHandmade: true,
     rating: 4.4,
+    reviews: 67
+  },
+  {
+    id: "7",
+    name: "Traditional White Cotton Kurta - Festival Edition",
+    price: 3500,
+    originalPrice: 4200,
+    image: kurtaImage,
+    category: "Men's Kurtas",
+    isHandmade: true,
+    rating: 4.6,
+    reviews: 89
+  },
+  {
+    id: "8",
+    name: "Handwoven Silk Dupatta with Zari Border",
+    price: 2200,
+    originalPrice: 2800,
+    image: dupattaImage,
+    category: "Dupattas",
+    isHandmade: true,
+    rating: 4.7,
+    reviews: 112
+  },
+  {
+    id: "9",
+    name: "Block Print Cotton Kurti - Summer Collection",
+    price: 1800,
+    image: kurtiImage,
+    category: "Kurtis",
+    isHandmade: true,
+    rating: 4.5,
+    reviews: 95
+  },
+  {
+    id: "10",
+    name: "Handcrafted Leather Crossbody Bag",
+    price: 2500,
+    originalPrice: 3200,
+    image: bagImage2,
+    category: "Bags",
+    isHandmade: true,
+    rating: 4.8,
     reviews: 67
   }
 ];
