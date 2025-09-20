@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange }: HeaderProps) => {
   return (
-    <header className="bg-card border-b sticky top-0 z-50 shadow-card-handloom">
+    <header className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-card-handloom">
       <div className="container mx-auto px-4">
         {/* Top bar */}
         <div className="flex items-center justify-between py-4">
