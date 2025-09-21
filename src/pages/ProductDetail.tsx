@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import Header from "@/components/Header";
 
 // Import images
 import sareeImage from "@/assets/saree-1.jpg";
@@ -177,6 +178,8 @@ const ProductDetail = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
 
   const product = mockProducts.find(p => p.id === id);
 
@@ -212,8 +215,17 @@ const ProductDetail = () => {
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-subtle-gradient" style={{ marginTop: '140px' }}>
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-subtle-gradient">
+      <Header
+        cartCount={0}
+        onCartClick={() => {}}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
+      
+      <div className="container mx-auto px-4 py-8" style={{ marginTop: '140px' }}>
         {/* Back Button */}
         <Button
           variant="ghost"
