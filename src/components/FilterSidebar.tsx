@@ -64,11 +64,11 @@ const FilterSidebar = ({
       
       {/* Sidebar */}
       <div className={`
-        fixed md:sticky top-0 left-0 h-screen md:h-auto w-80 md:w-64 bg-card 
-        border-r border-border z-50 transform transition-transform duration-300
+        fixed md:sticky top-[var(--header-height)] md:top-[var(--header-height)] left-0 h-[calc(100vh-var(--header-height))] md:h-auto w-80 md:w-64 bg-card 
+        border-r border-border z-40 transform transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         overflow-y-auto p-6 md:mt-6
-      `} style={{ top: '140px' }}>
+      `}>
         <div className="flex items-center justify-between mb-6 md:hidden">
           <h3 className="text-lg font-semibold">Filters</h3>
           <Button variant="ghost" size="icon" onClick={onClose}>

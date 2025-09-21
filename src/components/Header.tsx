@@ -1,4 +1,5 @@
 import { Search, ShoppingCart, Menu, User } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +14,20 @@ interface HeaderProps {
 }
 
 const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedCategory, onCategoryChange }: HeaderProps) => {
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const setHeight = () => {
+      if (headerRef.current) {
+        const h = headerRef.current.getBoundingClientRect().height;
+        document.documentElement.style.setProperty('--header-height', `${Math.ceil(h)}px`);
+      }
+    };
+    setHeight();
+    window.addEventListener('resize', setHeight);
+    return () => window.removeEventListener('resize', setHeight);
+  }, []);
   return (
-    <header className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-card-handloom">
+    <header ref={headerRef} className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-card-handloom">
       <div className="container mx-auto px-4">
         {/* Top bar */}
         <div className="flex items-center justify-between py-4">

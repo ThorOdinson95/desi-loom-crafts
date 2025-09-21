@@ -215,7 +215,7 @@ const ProductDetail = () => {
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-subtle-gradient">
+    <div className="min-h-screen bg-subtle-gradient pt-[var(--header-height)]">
       <Header
         cartCount={0}
         onCartClick={() => {}}
@@ -225,7 +225,7 @@ const ProductDetail = () => {
         onCategoryChange={setSelectedCategory}
       />
       
-      <div className="container mx-auto px-4 py-8" style={{ marginTop: '140px' }}>
+      <div className="container mx-auto px-4 py-8">
         {/* Back Button */}
         <Button
           variant="ghost"

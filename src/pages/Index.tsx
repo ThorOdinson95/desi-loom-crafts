@@ -263,7 +263,7 @@ const Index = () => {
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-subtle-gradient">
+    <div className="min-h-screen bg-subtle-gradient pt-[var(--header-height)]">
       <Header
         cartCount={cartCount}
         onCartClick={() => setIsCartOpen(true)}
@@ -274,7 +274,7 @@ const Index = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative h-96 overflow-hidden" style={{ marginTop: '140px' }}>
+      <section className="relative h-96 overflow-hidden">
         <img
           src={heroImage}
           alt="Beautiful handloom products showcase"
