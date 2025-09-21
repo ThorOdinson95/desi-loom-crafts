@@ -157,6 +157,7 @@ interface FilterState {
 const Index = () => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -169,7 +170,7 @@ const Index = () => {
     rating: 0
   });
 
-  // Filter products based on search and filters
+  // Filter products based on search, category, and filters
   const filteredProducts = useMemo(() => {
     return mockProducts.filter(product => {
       // Search filter
@@ -177,7 +178,12 @@ const Index = () => {
         return false;
       }
       
-      // Category filter
+      // Category filter from navbar
+      if (selectedCategory !== "All Products" && product.category !== selectedCategory) {
+        return false;
+      }
+      
+      // Category filter from sidebar
       if (filters.categories.length > 0 && !filters.categories.includes(product.category)) {
         return false;
       }
@@ -199,7 +205,7 @@ const Index = () => {
       
       return true;
     });
-  }, [searchQuery, filters]);
+  }, [searchQuery, selectedCategory, filters]);
 
   const handleAddToCart = (product: Product) => {
     setCartItems(prev => {
@@ -251,6 +257,7 @@ const Index = () => {
       isHandmade: false,
       rating: 0
     });
+    setSelectedCategory("All Products");
   };
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -262,6 +269,8 @@ const Index = () => {
         onCartClick={() => setIsCartOpen(true)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
       />
 
       {/* Hero Section */}

@@ -1,7 +1,8 @@
-import { Heart, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Heart, Star, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: string;
@@ -23,13 +24,17 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, onAddToCart, onToggleFavorite, isFavorite }: ProductCardProps) => {
+  const navigate = useNavigate();
   const discount = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
   return (
-    <Card className="group overflow-hidden hover:shadow-handloom transition-all duration-300 hover:-translate-y-1">
-      <div className="relative overflow-hidden">
+    <Card className="group overflow-hidden hover:shadow-handloom transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+      <div 
+        className="relative overflow-hidden"
+        onClick={() => navigate(`/product/${product.id}`)}
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -51,13 +56,20 @@ const ProductCard = ({ product, onAddToCart, onToggleFavorite, isFavorite }: Pro
           className={`absolute top-2 right-2 ${discount > 0 ? 'top-12' : ''} bg-white/80 hover:bg-white ${
             isFavorite ? 'text-red-500' : 'text-muted-foreground'
           }`}
-          onClick={() => onToggleFavorite(product.id)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggleFavorite(product.id);
+          }}
         >
           <Heart className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
         </Button>
       </div>
       
-      <CardContent className="p-4">
+      <CardContent 
+        className="p-4"
+        onClick={() => navigate(`/product/${product.id}`)}
+      >
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground uppercase tracking-wide">
             {product.category}
@@ -69,14 +81,12 @@ const ProductCard = ({ product, onAddToCart, onToggleFavorite, isFavorite }: Pro
           <div className="flex items-center space-x-2">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <span
+                <Star
                   key={i}
-                  className={`text-xs ${
-                    i < Math.floor(product.rating) ? 'text-handloom-gold' : 'text-gray-300'
+                  className={`h-4 w-4 ${
+                    i < Math.floor(product.rating) ? 'fill-primary text-primary' : 'text-muted-foreground'
                   }`}
-                >
-                  ★
-                </span>
+                />
               ))}
             </div>
             <span className="text-sm text-muted-foreground">
@@ -101,7 +111,11 @@ const ProductCard = ({ product, onAddToCart, onToggleFavorite, isFavorite }: Pro
             <Button
               size="icon"
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              onClick={() => onAddToCart(product)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onAddToCart(product);
+              }}
             >
               <ShoppingCart className="h-4 w-4" />
             </Button>

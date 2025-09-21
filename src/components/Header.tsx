@@ -8,9 +8,11 @@ interface HeaderProps {
   onCartClick: () => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
 }
 
-const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange }: HeaderProps) => {
+const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedCategory, onCategoryChange }: HeaderProps) => {
   return (
     <header className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-card-handloom">
       <div className="container mx-auto px-4">
@@ -77,8 +79,13 @@ const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange }: HeaderP
             ].map((category) => (
               <Button
                 key={category}
-                variant="ghost"
-                className="whitespace-nowrap text-foreground hover:text-primary hover:bg-secondary"
+                variant={selectedCategory === category ? "default" : "ghost"}
+                className={`whitespace-nowrap ${
+                  selectedCategory === category
+                    ? "bg-primary text-primary-foreground"
+                    : "text-foreground hover:text-primary hover:bg-secondary"
+                }`}
+                onClick={() => onCategoryChange(category)}
               >
                 {category}
               </Button>
