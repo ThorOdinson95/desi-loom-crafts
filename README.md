@@ -1,73 +1,110 @@
-# Welcome to your Lovable project
 
-## Project info
+## *How the Application Works*
 
-**URL**: https://lovable.dev/projects/d3dae3d0-123c-41fe-b10d-7dd926d44ae2
+This application is a *handloom e-commerce website* called "Handloom Heritage" that showcases and sells authentic Indian handloom products. 
 
-## How can I edit this code?
 
-There are several ways of editing your application.
+## *Core Frameworks & Libraries*
 
-**Use Lovable**
+### *1. Frontend Framework*
+- *React 18.3.1* - The main UI library using functional components and hooks
+- *TypeScript* - Provides type safety and better development experience
+- *Vite* - Modern build tool for fast development and optimized production builds
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d3dae3d0-123c-41fe-b10d-7dd926d44ae2) and start prompting.
+### *2. Routing & Navigation*
+- *React Router DOM 6.30.1* - Handles client-side routing between pages:
+  - / - Homepage with product grid
+  - /product/:id - Individual product detail pages
+  - * - 404 Not Found page
 
-Changes made via Lovable will be committed automatically to this repo.
+### *3. UI Component Library (shadcn/ui)*
+Built on top of *Radix UI primitives* with custom styling:
+- *@radix-ui/react-** components for accessibility and functionality
+- *Tailwind CSS* for styling and responsive design
+- *Lucide React* for consistent iconography
 
-**Use your preferred IDE**
+### *4. State Management & Data Fetching*
+- *TanStack React Query 5.83.0* - Server state management and caching
+- *React Hook Form 7.61.1* - Form handling and validation
+- *Zod 3.25.76* - Schema validation for forms
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### *5. Styling & Design System*
+- *Tailwind CSS* - Utility-first CSS framework
+- *tailwindcss-animate* - Pre-built animations
+- *class-variance-authority (CVA)* - Type-safe component variants
+- *clsx & tailwind-merge* - Conditional class merging
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## *Key Features Implementation*
 
-Follow these steps:
+### *Product Catalog System*
+typescript
+// Mock data structure for products
+const mockProducts = [
+  {
+    id: "1",
+    name: "Traditional Kanchipuram Silk Saree",
+    price: 12500,
+    originalPrice: 15000,
+    image: sareeImage,
+    category: "Sarees",
+    isHandmade: true,
+    rating: 4.8,
+    reviews: 124
+  }
+]
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### *Dynamic Filtering & Search*
+- Category-based filtering through navbar
+- Advanced filters in sidebar (price, ratings, handmade status)
+- Real-time search functionality
+- Responsive filter sidebar that works on mobile and desktop
 
-# Step 3: Install the necessary dependencies.
-npm i
+### *Shopping Cart*
+- Add/remove items with quantity control
+- Persistent cart state using React state
+- Slide-out cart sidebar
+- Real-time cart count in header
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### *Responsive Design*
+- Mobile-first approach with Tailwind's responsive utilities
+- Fixed header that doesn't overlap content
+- Collapsible filter sidebar on mobile
+- Optimized layouts for different screen sizes
 
-**Edit a file directly in GitHub**
+## *Project Architecture*
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
 
-**Use GitHub Codespaces**
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   ├── Header.tsx      # Navigation & search
+│   ├── ProductCard.tsx # Product display component
+│   ├── FilterSidebar.tsx # Product filtering
+│   └── CartSidebar.tsx # Shopping cart
+├── pages/              # Route components
+│   ├── Index.tsx       # Homepage with product grid
+│   ├── ProductDetail.tsx # Individual product page
+│   └── NotFound.tsx    # 404 page
+├── assets/             # Static images
+├── hooks/              # Custom React hooks
+└── lib/                # Utility functions
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## *Development Tools & Build Process*
 
-This project is built with:
+- *ESLint* - Code linting and formatting
+- *TypeScript* - Type checking during development
+- *Vite SWC* - Fast compilation using SWC (Speedy Web Compiler)
+- *PostCSS & Autoprefixer* - CSS processing and vendor prefixes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## *Notable Features*
 
-## How can I deploy this project?
+1. *Dynamic Header Height*: Uses CSS custom properties to prevent content overlap
+2. *Product Rating System*: Star ratings with review counts
+3. *Discount Calculations*: Shows original vs sale prices with percentage savings
+4. *Stock Management*: Displays availability and stock status
+5. *Image Optimization*: Proper aspect ratios and lazy loading
+6. *Toast Notifications*: User feedback for cart actions using Sonner
 
-Simply open [Lovable](https://lovable.dev/projects/d3dae3d0-123c-41fe-b10d-7dd926d44ae2) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The application follows modern React patterns with hooks, context for global state, and a component-based architecture that's maintainable and scalable. The use of TypeScript ensures type safety, while the shadcn/ui components provide a consistent, accessible design system.
