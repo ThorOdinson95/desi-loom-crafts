@@ -2,6 +2,7 @@ import { X, Plus, Minus, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 interface CartItem {
   id: string;
@@ -27,8 +28,14 @@ const CartSidebar = ({
   onUpdateQuantity, 
   onRemoveItem 
 }: CartSidebarProps) => {
+  const navigate = useNavigate();
   const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleCheckout = () => {
+    onClose();
+    navigate("/checkout", { state: { cartItems } });
+  };
 
   return (
     <>
@@ -134,7 +141,7 @@ const CartSidebar = ({
             </div>
             <Separator />
             <div className="space-y-2">
-              <Button className="w-full bg-primary hover:bg-primary/90">
+              <Button className="w-full bg-primary hover:bg-primary/90" onClick={handleCheckout}>
                 Proceed to Checkout
               </Button>
               <Button variant="outline" className="w-full" onClick={onClose}>

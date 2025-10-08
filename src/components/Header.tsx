@@ -1,4 +1,5 @@
-import { Search, ShoppingCart, Menu, User } from "lucide-react";
+import { Search, ShoppingCart, Menu, User, Package } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,9 @@ interface HeaderProps {
 }
 
 const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedCategory, onCategoryChange }: HeaderProps) => {
+  const navigate = useNavigate();
   const headerRef = useRef<HTMLElement>(null);
+  
   useEffect(() => {
     const setHeight = () => {
       if (headerRef.current) {
@@ -26,6 +29,7 @@ const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedC
     window.addEventListener('resize', setHeight);
     return () => window.removeEventListener('resize', setHeight);
   }, []);
+  
   return (
     <header ref={headerRef} className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-card-handloom">
       <div className="container mx-auto px-4">
@@ -52,8 +56,8 @@ const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedC
 
           {/* User actions */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
+            <Button variant="ghost" size="icon" onClick={() => navigate("/orders")}>
+              <Package className="h-5 w-5" />
             </Button>
             <Button 
               variant="ghost" 
