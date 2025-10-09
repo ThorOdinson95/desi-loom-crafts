@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import Header from '@/components/Header';
 
 const Profile = () => {
   const { user, isAuthenticated, logout, updateProfile } = useAuth();
@@ -42,15 +41,22 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header 
-        cartCount={0}
-        onCartClick={() => {}}
-        searchQuery=""
-        onSearchChange={() => {}}
-        selectedCategory="All Products"
-        onCategoryChange={() => {}}
-      />
-      <div className="container mx-auto px-4 py-8 mt-[var(--header-height)]">
+      <header className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between py-4">
+            <button
+              onClick={() => navigate('/')}
+              className="text-2xl font-serif font-bold bg-hero-gradient bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+            >
+              Handloom Heritage
+            </button>
+            <Button variant="outline" onClick={() => navigate('/')}>
+              Back to Shopping
+            </Button>
+          </div>
+        </div>
+      </header>
+      <div className="container mx-auto px-4 py-8 mt-20">
         <h1 className="font-serif text-3xl font-bold mb-8">Account Management</h1>
         
         <div className="grid gap-6 max-w-2xl">

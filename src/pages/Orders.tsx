@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Package, MapPin, CreditCard, Calendar, ArrowLeft } from "lucide-react";
+import { Package, MapPin, Calendar } from "lucide-react";
 
 interface Order {
   id: string;
@@ -31,7 +30,6 @@ interface Order {
 const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
 
   useEffect(() => {
     const savedOrders = JSON.parse(localStorage.getItem("orders") || "[]");
@@ -53,16 +51,23 @@ const Orders = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="min-h-screen bg-subtle-gradient pt-[var(--header-height)]">
-        <Header
-          cartCount={0}
-          onCartClick={() => {}}
-          searchQuery=""
-          onSearchChange={() => {}}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen bg-subtle-gradient">
+        <header className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between py-4">
+              <button
+                onClick={() => navigate('/')}
+                className="text-2xl font-serif font-bold bg-hero-gradient bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+              >
+                Handloom Heritage
+              </button>
+              <Button variant="outline" onClick={() => navigate('/')}>
+                Back to Shopping
+              </Button>
+            </div>
+          </div>
+        </header>
+        <div className="container mx-auto px-4 py-8 mt-20">
           <Card className="max-w-md mx-auto text-center">
             <CardContent className="pt-6 pb-6">
               <Package className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
@@ -79,26 +84,24 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-subtle-gradient pt-[var(--header-height)]">
-      <Header
-        cartCount={0}
-        onCartClick={() => {}}
-        searchQuery=""
-        onSearchChange={() => {}}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
+    <div className="min-h-screen bg-subtle-gradient">
+      <header className="bg-card/95 backdrop-blur-sm border-b fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between py-4">
+            <button
+              onClick={() => navigate('/')}
+              className="text-2xl font-serif font-bold bg-hero-gradient bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+            >
+              Handloom Heritage
+            </button>
+            <Button variant="outline" onClick={() => navigate('/')}>
+              Back to Shopping
+            </Button>
+          </div>
+        </div>
+      </header>
 
-      <div className="container mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => navigate("/")}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
-        </Button>
-
+      <div className="container mx-auto px-4 py-8 mt-20">
         <h1 className="text-3xl font-bold mb-8">My Orders</h1>
 
         <div className="space-y-6">
