@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface User {
   id: string;
@@ -7,40 +7,48 @@ export interface User {
   createdAt: string;
 }
 
-interface AuthState {
+interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  login: (email: string, password: string) => boolean;
+  signup: (email: string, password: string, name: string) => boolean;
+  logout: () => void;
+  updateProfile: (updates: Partial<User>) => void;
 }
 
-export const useAuth = () => {
-  const [authState, setAuthState] = useState<AuthState>({
-    user: null,
-    isAuthenticated: false,
-  });
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setAuthState({
-        user: JSON.parse(storedUser),
-        isAuthenticated: true,
-      });
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('Failed to parse user from localStorage', error);
+        localStorage.removeItem('user');
+      }
     }
+    setIsLoading(false);
   }, []);
 
   const login = (email: string, password: string): boolean => {
     const usersData = localStorage.getItem('users');
     const users = usersData ? JSON.parse(usersData) : [];
     
-    const user = users.find((u: any) => u.email === email && u.password === password);
+    const foundUser = users.find((u: any) => u.email === email && u.password === password);
     
-    if (user) {
-      const { password: _, ...userWithoutPassword } = user;
+    if (foundUser) {
+      const { password: _, ...userWithoutPassword } = foundUser;
       localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-      setAuthState({
-        user: userWithoutPassword,
-        isAuthenticated: true,
-      });
+      setUser(userWithoutPassword);
+      setIsAuthenticated(true);
       return true;
     }
     return false;
@@ -67,29 +75,22 @@ export const useAuth = () => {
     
     const { password: _, ...userWithoutPassword } = newUser;
     localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-    setAuthState({
-      user: userWithoutPassword,
-      isAuthenticated: true,
-    });
+    setUser(userWithoutPassword);
+    setIsAuthenticated(true);
     return true;
   };
 
   const logout = () => {
     localStorage.removeItem('user');
-    setAuthState({
-      user: null,
-      isAuthenticated: false,
-    });
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
   const updateProfile = (updates: Partial<User>) => {
-    if (authState.user) {
-      const updatedUser = { ...authState.user, ...updates };
+    if (user) {
+      const updatedUser = { ...user, ...updates };
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      setAuthState({
-        user: updatedUser,
-        isAuthenticated: true,
-      });
+      setUser(updatedUser);
       
       const usersData = localStorage.getItem('users');
       const users = usersData ? JSON.parse(usersData) : [];
@@ -101,12 +102,21 @@ export const useAuth = () => {
     }
   };
 
-  return {
-    user: authState.user,
-    isAuthenticated: authState.isAuthenticated,
-    login,
-    signup,
-    logout,
-    updateProfile,
-  };
+  if (isLoading) {
+    return null;
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, login, signup, logout, updateProfile }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
