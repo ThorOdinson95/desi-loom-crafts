@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/useAuth";
 
 interface HeaderProps {
   cartCount: number;
@@ -16,6 +17,7 @@ interface HeaderProps {
 
 const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedCategory, onCategoryChange }: HeaderProps) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const headerRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
@@ -73,6 +75,13 @@ const Header = ({ cartCount, onCartClick, searchQuery, onSearchChange, selectedC
                   {cartCount}
                 </Badge>
               )}
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate(isAuthenticated ? "/profile" : "/auth")}
+            >
+              <User className="h-5 w-5" />
             </Button>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-5 w-5" />
