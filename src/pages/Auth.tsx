@@ -16,7 +16,7 @@ const Auth = () => {
   const { login, signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (isForgotPassword) {
@@ -27,7 +27,7 @@ const Auth = () => {
     }
     
     if (isLogin) {
-      const success = login(email, password);
+      const success = await login(email, password);
       if (success) {
         toast.success('Successfully logged in!');
         navigate('/');
@@ -39,7 +39,7 @@ const Auth = () => {
         toast.error('Please enter your name');
         return;
       }
-      const success = signup(email, password, name);
+      const success = await signup(email, password, name);
       if (success) {
         toast.success('Account created successfully!');
         navigate('/');

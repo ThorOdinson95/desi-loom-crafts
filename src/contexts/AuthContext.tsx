@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { api } from '@/lib/api';
 
 export interface User {
   id: string;
@@ -10,8 +11,8 @@ export interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => boolean;
-  signup: (email: string, password: string, name: string) => boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  signup: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => void;
   updateProfile: (updates: Partial<User>) => void;
 }
@@ -38,46 +39,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const login = (email: string, password: string): boolean => {
-    const usersData = localStorage.getItem('users');
-    const users = usersData ? JSON.parse(usersData) : [];
-    
-    const foundUser = users.find((u: any) => u.email === email && u.password === password);
-    
-    if (foundUser) {
-      const { password: _, ...userWithoutPassword } = foundUser;
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-      setUser(userWithoutPassword);
-      setIsAuthenticated(true);
-      return true;
-    }
-    return false;
-  };
-
-  const signup = (email: string, password: string, name: string): boolean => {
-    const usersData = localStorage.getItem('users');
-    const users = usersData ? JSON.parse(usersData) : [];
-    
-    if (users.find((u: any) => u.email === email)) {
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      const foundUser = await api.login(email, password);
+      
+      if (foundUser) {
+        const { password: _, ...userWithoutPassword } = foundUser;
+        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+        setUser(userWithoutPassword);
+        setIsAuthenticated(true);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Login error:', error);
       return false;
     }
-    
-    const newUser = {
-      id: Date.now().toString(),
-      email,
-      password,
-      name,
-      createdAt: new Date().toISOString(),
-    };
-    
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    
-    const { password: _, ...userWithoutPassword } = newUser;
-    localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-    setUser(userWithoutPassword);
-    setIsAuthenticated(true);
-    return true;
+  };
+
+  const signup = async (email: string, password: string, name: string): Promise<boolean> => {
+    try {
+      const newUser = await api.signup(email, password, name);
+      
+      if (newUser) {
+        const { password: _, ...userWithoutPassword } = newUser;
+        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+        setUser(userWithoutPassword);
+        setIsAuthenticated(true);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Signup error:', error);
+      return false;
+    }
   };
 
   const logout = () => {
