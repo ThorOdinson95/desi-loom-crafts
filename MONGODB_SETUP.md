@@ -74,9 +74,14 @@ const UserSchema = new mongoose.Schema({
 const ProductSchema = new mongoose.Schema({
   name: String,
   price: Number,
+  originalPrice: Number,
   category: String,
   image: String,
   description: String,
+  features: [String],
+  isHandmade: Boolean,
+  rating: Number,
+  reviews: Number,
   stock: { type: Number, default: 0 }
 });
 
@@ -240,9 +245,14 @@ mongoose.connect('mongodb://localhost:27017/handloom-shop');
 const ProductSchema = new mongoose.Schema({
   name: String,
   price: Number,
+  originalPrice: Number,
   category: String,
   image: String,
   description: String,
+  features: [String],
+  isHandmade: Boolean,
+  rating: Number,
+  reviews: Number,
   stock: Number
 });
 
@@ -250,22 +260,132 @@ const Product = mongoose.model('Product', ProductSchema);
 
 const products = [
   {
-    name: 'Traditional Handloom Saree',
-    price: 2999,
-    category: 'Women',
+    name: 'Traditional Kanchipuram Silk Saree with Golden Zari Work',
+    price: 12500,
+    originalPrice: 15000,
+    category: 'Sarees',
     image: '/src/assets/saree-1.jpg',
-    description: 'Beautiful handwoven saree with traditional patterns',
+    description: 'Exquisite Kanchipuram silk saree handwoven with traditional golden zari work. This masterpiece showcases the rich heritage of South Indian craftsmanship with intricate patterns that have been passed down through generations.',
+    features: ['100% Pure Silk', 'Handwoven Zari Work', 'Traditional Design', 'Dry Clean Only'],
+    isHandmade: true,
+    rating: 4.8,
+    reviews: 124,
     stock: 15
   },
   {
-    name: 'Cotton Kurta',
-    price: 899,
-    category: 'Men',
-    image: '/src/assets/kurta-1.jpg',
-    description: 'Comfortable handloom cotton kurta',
+    name: 'Handloom Cotton Block Print Dress - Indigo Collection',
+    price: 3200,
+    originalPrice: 4000,
+    category: 'Dresses',
+    image: '/src/assets/dress-1.jpg',
+    description: 'Beautiful handloom cotton dress featuring traditional block print in stunning indigo color. Made from premium cotton with eco-friendly natural dyes.',
+    features: ['Organic Cotton', 'Natural Dyes', 'Block Print Design', 'Machine Washable'],
+    isHandmade: true,
+    rating: 4.6,
+    reviews: 89,
+    stock: 8
+  },
+  {
+    name: 'Pure Cotton Handwoven Kurta for Men - Natural Beige',
+    price: 2800,
+    category: "Men's Shirts",
+    image: '/src/assets/shirt-1.jpg',
+    description: 'Comfortable and elegant handwoven cotton kurta in natural beige. Perfect for casual and semi-formal occasions with its breathable fabric and classic design.',
+    features: ['100% Cotton', 'Handwoven Fabric', 'Comfortable Fit', 'Machine Washable'],
+    isHandmade: true,
+    rating: 4.7,
+    reviews: 56,
+    stock: 12
+  },
+  {
+    name: 'Handcrafted Jute Tote Bag with Traditional Motifs',
+    price: 1200,
+    originalPrice: 1500,
+    category: 'Bags',
+    image: '/src/assets/bag-1.jpg',
+    description: 'Eco-friendly jute tote bag with beautiful traditional motifs. Spacious and durable, perfect for daily use while supporting sustainable fashion.',
+    features: ['Eco-friendly Jute', 'Traditional Motifs', 'Spacious Design', 'Durable Construction'],
+    isHandmade: true,
+    rating: 4.5,
+    reviews: 73,
     stock: 25
   },
-  // Add more products...
+  {
+    name: 'Banarasi Silk Saree - Wedding Collection',
+    price: 18000,
+    originalPrice: 22000,
+    category: 'Sarees',
+    image: '/src/assets/saree-2.jpg',
+    description: 'Luxurious Banarasi silk saree from our exclusive wedding collection. Features intricate gold and silver zari work that makes it perfect for special occasions.',
+    features: ['Pure Banarasi Silk', 'Gold & Silver Zari', 'Wedding Collection', 'Gift Wrapped'],
+    isHandmade: true,
+    rating: 4.9,
+    reviews: 156,
+    stock: 5
+  },
+  {
+    name: 'Handloom Cotton Palazzo Dress Set',
+    price: 2800,
+    category: 'Dresses',
+    image: '/src/assets/dress-2.jpg',
+    description: 'Comfortable handloom cotton palazzo dress set perfect for summer. The flowing silhouette and breathable fabric make it ideal for warm weather.',
+    features: ['Handloom Cotton', 'Palazzo Style', 'Summer Wear', 'Comfortable Fit'],
+    isHandmade: true,
+    rating: 4.4,
+    reviews: 67,
+    stock: 10
+  },
+  {
+    name: 'Traditional White Cotton Kurta - Festival Edition',
+    price: 3500,
+    originalPrice: 4200,
+    category: "Men's Kurtas",
+    image: '/src/assets/kurta-1.jpg',
+    description: 'Classic white cotton kurta from our festival edition. Features subtle embroidery and premium cotton fabric, perfect for celebrations and formal occasions.',
+    features: ['Premium Cotton', 'Subtle Embroidery', 'Festival Edition', 'Classic Design'],
+    isHandmade: true,
+    rating: 4.6,
+    reviews: 89,
+    stock: 7
+  },
+  {
+    name: 'Handwoven Silk Dupatta with Zari Border',
+    price: 2200,
+    originalPrice: 2800,
+    category: 'Dupattas',
+    image: '/src/assets/dupatta-1.jpg',
+    description: 'Elegant handwoven silk dupatta with traditional zari border work. Perfect accessory to complement ethnic wear with its rich texture and beautiful design.',
+    features: ['Pure Silk', 'Zari Border', 'Handwoven', 'Versatile Styling'],
+    isHandmade: true,
+    rating: 4.7,
+    reviews: 112,
+    stock: 18
+  },
+  {
+    name: 'Block Print Cotton Kurti - Summer Collection',
+    price: 1800,
+    category: 'Kurtis',
+    image: '/src/assets/kurti-1.jpg',
+    description: 'Refreshing block print cotton kurti from our summer collection. Features vibrant colors and comfortable cotton fabric perfect for everyday wear.',
+    features: ['Block Print Design', 'Summer Collection', 'Cotton Fabric', 'Vibrant Colors'],
+    isHandmade: true,
+    rating: 4.5,
+    reviews: 95,
+    stock: 20
+  },
+  {
+    name: 'Handcrafted Leather Crossbody Bag',
+    price: 2500,
+    originalPrice: 3200,
+    category: 'Bags',
+    image: '/src/assets/bag-2.jpg',
+    description: 'Stylish handcrafted leather crossbody bag with traditional craftsmanship. Features multiple compartments and adjustable strap for convenience.',
+    features: ['Genuine Leather', 'Multiple Compartments', 'Adjustable Strap', 'Handcrafted'],
+    isHandmade: true,
+    rating: 4.8,
+    reviews: 67,
+    stock: 14
+  }
 ];
 
 async function seed() {
